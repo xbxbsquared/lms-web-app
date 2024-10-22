@@ -144,7 +144,7 @@ export class CreateChargeComponent implements OnInit {
     const chargeTimeType = this.chargeForm.controls.chargeTimeType.value;
 
     if (chargeAppliesTo === 1) {
-      return (chargeCalculationType === 2 || chargeCalculationType === 3 || chargeCalculationType === 4 || chargeCalculationType === 5);
+      return (chargeCalculationType === 2 || chargeCalculationType === 3 || chargeCalculationType === 4 || chargeCalculationType === 5 || chargeCalculationType === 6);
     } else if (chargeAppliesTo === 2) {
       return (chargeTimeType === 16 || chargeTimeType === 5) && (chargeCalculationType === 2);
     } else if (chargeAppliesTo === 4) {
