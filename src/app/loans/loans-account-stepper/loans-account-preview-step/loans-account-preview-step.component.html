@@ -73,7 +73,7 @@
         {{ loansAccount.otherCharges | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
         <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
       </span>
-   </div>
+  </div>
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Advance" | translate}}:</span>
     <span fxFlex="60%">
@@ -93,7 +93,23 @@
     <span
       fxFlex="60%">{{loansAccount.advanceRatio}}&nbsp;&nbsp;%</span>
   </div>
-
+  <div fxFlexFill *ngIf="loansAccount.factoringFees">
+    <span fxFlex = "40%">{{"labels.inputs.Factoring Fees" | translate}}:</span>
+    <span fxFlex = "60%">{{loansAccount.factoringFees}}&nbsp;&nbsp;%</span>
+  </div>
+  <div fxFlexFill *ngif="loansAccount.netinvoiceValue">
+    <span fxFlex = "40%">{{labels.inputs.Net Invoice Value" | translate}}:</span>
+    <span fxFlex="60%">{{loansAccount.netinvoiceValue}}&nbsp;&nbsp;%</span>
+  </div>
+  <div fxFlexFill *ngIf="loansAccount.Tenure">
+    <span fxFlex = "40%">{{"labels.inputs.Tenure" | translate}}:</span>
+    <span fxFlex="60%">{{loansAccount.Tenure}}&nbsp;&nbsp;%</span>
+  </div>
+  <div fxFlexFill *ngIf="loansAccount.interestRate">
+    <span fxFlex = "40%">{{"labels.inputs.interest Rate" | translate}}:</span>
+    <span fxFlex="60%">{{loansAccount.interestRate}}&nbsp;&nbsp;%</span>
+  </div>
+  
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Loan Term" | translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.loanTermFrequency }}

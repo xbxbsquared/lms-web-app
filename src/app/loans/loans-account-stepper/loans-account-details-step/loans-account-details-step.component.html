@@ -20,11 +20,28 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="loanProductSelected">
 
-    <mat-form-field fxFlex="48%">
+    <!-- Buyer Details Section (only visible if Product Factoring Loan is selected) -->
+    <mat-form-field fxFlex="48%" *ngIf="isFactoringLoan">
       <mat-label>{{"labels.inputs.External id" | translate}}</mat-label>
       <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate}}">
     </mat-form-field>
 
+    <mat-form-field fxFlex="48%" *ngIf="isFactoringLoan">
+      <mat-label>{{"labels.inputs.Buyer Name" | translate}}</mat-label>
+      <input matInput formControlName="buyerName" matTooltip="{{ 'tooltips.Provides an external id' | translate}}">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%" *ngIf="isFactoringLoan">
+      <mat-label>{{"labels.inputs.Buyer Email" | translate}}</mat-label>
+      <input matInput formControlName="buyerEmail" matTooltip="{{ 'tooltips.Provides an external id' | translate}}">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%" *ngIf="isFactoringLoan">
+      <mat-label>{{"labels.inputs.Buyer Contact" | translate}}</mat-label>
+      <input matInput formControlName="buyerContact" matTooltip="{{ 'tooltips.Provides an external id' | translate}}">
+    </mat-form-field>
+
+    <!-- Loan Officer -->
     <mat-form-field fxFlex="48%" *ngIf="loanProductSelected">
       <mat-label>{{"labels.inputs.Loan officer" | translate}}</mat-label>
       <mat-select formControlName="loanOfficerId" matTooltip="{{ 'tooltips.Financial institution representative' | translate}}">
@@ -34,6 +51,7 @@
       </mat-select>
     </mat-form-field>
 
+    <!-- Loan Purpose -->
     <mat-form-field fxFlex="48%">
       <mat-label>{{"labels.inputs.Loan Purpose" | translate}}</mat-label>
       <mat-select formControlName="loanPurposeId" matTooltip="{{ 'tooltips.Provides an indication' | translate}}">
@@ -43,6 +61,7 @@
       </mat-select>
     </mat-form-field>
 
+    <!-- Fund -->
     <mat-form-field fxFlex="48%">
       <mat-label>{{"labels.inputs.Fund" | translate}}</mat-label>
       <mat-select formControlName="fundId">
@@ -52,6 +71,7 @@
       </mat-select>
     </mat-form-field>
 
+    <!-- Submitted On Date -->
     <mat-form-field fxFlex="48%" (click)="submitPicker.open()">
       <mat-label>{{"labels.inputs.Submitted on" | translate}}</mat-label>
       <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submitPicker" matTooltip="{{ 'tooltips.Date the loan account application' | translate}}" required
@@ -63,6 +83,7 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- Disbursement Date -->
     <mat-form-field fxFlex="48%" (click)="disbursementPicker.open()">
       <mat-label>{{"labels.inputs.Disbursement on" | translate}}</mat-label>
       <input matInput [min]="loansAccountDetailsForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="disbursementPicker" matTooltip="{{ 'tooltips.Date that the loan account disbursed' | translate}}" required
@@ -78,6 +99,7 @@
 
     <h3 class="mat-h3" fxFlexFill>{{"labels.heading.Savings Linkage" | translate}}</h3>
 
+    <!-- Savings Account Link -->
     <mat-form-field fxFlex="48%">
       <mat-label>{{"labels.inputs.Link savings" | translate}}</mat-label>
       <mat-select formControlName="linkAccountId">
@@ -87,6 +109,7 @@
       </mat-select>
     </mat-form-field>
 
+    <!-- Standing Instruction Checkbox -->
     <mat-checkbox fxFlex="48%" formControlName="createStandingInstructionAtDisbursement">
       <p>{{"labels.inputs.Create standing instructions at disbursement" | translate}}</p>
     </mat-checkbox>

@@ -1272,6 +1272,9 @@
             "Business Date": "Business Date",
             "Business Rule": "Business Rule",
             "Bussiness Rule": "Business Rule",
+            "Buyer Name": "Buyer Name",
+            "Buyer Email": "Buyer Email",
+            "Buyer Contact":"Buyer Contact",
             "CAMPAIGN": "CAMPAIGN",
             "CHARGES": "CHARGES",
             "COB Date": "COB Date",
@@ -2423,7 +2426,11 @@
             "Other Charges": "Other Charges",
             "Advance": "Advance",
             "Reduction By Lender": "Reduction By Lender",
-            "Advance Ratio": "Advance Ratio"
+            "Advance Ratio": "Advance Ratio",
+            "Factoring fees": "Factoring Fees",
+            "Net Invoice Value": "Net Invoice Value",
+            "Interest Rate": "Interest Rate",
+            "Tenure": "Tenure"
             
         },
         "links": {
