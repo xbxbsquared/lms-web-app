@@ -145,7 +145,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'factoringFees' : this.loansAccountTermsData.factoringFees,
         'netinvoiceValue' : this.loansAccountTermsData.netinvoiceValue,
         'interestRate' : this.loansAccountTermsData.interestRate,
-        'Tenure' : this.loansAccountTermsData.Tenure,
+        'tenure' : this.loansAccountTermsData.tenure,
         'loanTermFrequency': this.loansAccountTermsData.termFrequency,
         'loanTermFrequencyType': this.loansAccountTermsData.termPeriodFrequencyType.id,
         'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
@@ -256,7 +256,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'factoringFees' : this.loansAccountTermsData.factoringFees,
         'netinvoiceValue' : this.loansAccountTermsData.netinvoiceValue,
         'interestRate' : this.loansAccountTermsData.interestRate,
-        'Tenure' : this.loansAccountTermsData.Tenure,
+        'tenure' : this.loansAccountTermsData.tenure,
         'loanTermFrequency': this.loansAccountTermsData.termFrequency,
         'loanTermFrequencyType': this.loansAccountTermsData.termPeriodFrequencyType.id,
         'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
@@ -340,9 +340,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('freightCharges').valueChanges
       .subscribe(freightCharges => {
@@ -352,9 +352,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('otherCharges').valueChanges
       .subscribe(otherCharges => {
@@ -364,9 +364,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('advance').valueChanges
       .subscribe(advance => {
@@ -376,9 +376,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('reductionByLender').valueChanges
       .subscribe(reductionByLender => {
@@ -388,9 +388,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const advance: number = this.loansAccountTermsForm.value.advance;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('advanceRatio').valueChanges
       .subscribe(advanceRatio => {
@@ -400,9 +400,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const advance: number = this.loansAccountTermsForm.value.advance;
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('factoringFees').valueChanges
       .subscribe(factoringFees => {
@@ -412,12 +412,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const advance: number = this.loansAccountTermsForm.value.advance;
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
-        const Tenure : number = this.loansAccountTermsForm.value.Tenure;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
-    this.loansAccountTermsForm.get('Tenure').valueChanges
-      .subscribe(Tenure => {
+    this.loansAccountTermsForm.get('tenure').valueChanges
+      .subscribe(tenure => {
         const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
         const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
         const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
@@ -426,7 +426,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees: number = this.loansAccountTermsForm.value.factoringFees;
         const interestRate: number = this.loansAccountTermsForm.value.interestRate;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('interestRate').valueChanges
       .subscribe(interestRate => {
@@ -437,8 +437,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
         const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
         const factoringFees: number = this.loansAccountTermsForm.value.factoringFees;
-        const Tenure: number = this.loansAccountTermsForm.value.Tenure;
-        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, Tenure, interestRate);
+        const tenure: number = this.loansAccountTermsForm.value.tenure;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
     });
     this.loansAccountTermsForm.get('amortizationType').valueChanges
       .subscribe(amortizationType => {
@@ -488,7 +488,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       'factoringFees' : [''],
       'netinvoiceValue' : [0],
       'interestRate': [''],
-      'Tenure': [30],
+      'tenure': [30],
       'loanTermFrequency': [{ value: '', disabled: true }, Validators.required],
       'loanTermFrequencyType': ['', Validators.required],
       'numberOfRepayments': ['', Validators.required],
@@ -540,19 +540,23 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     var ni: number =0;
     this.calculatedInvoiceValue = +goodsV + +freightC + +otherC;
      gi = +goodsV + +freightC + +otherC;
-     aiv = gi-reductionBL;
-     aiv = aiv - adv;
-     disbAmt = (aiv*ar)/100;
-     fi = (ff*aiv)/100;
+     gi = gi-reductionBL;
+     gi = gi - adv;
+     disbAmt = (gi*ar)/100;
+     fi = (ff*gi)/100;
      interest = (ir/100)*(tn/365)*disbAmt;
      ni = disbAmt-fi-interest;
-     ni = ni - (ni/100);
+     
      
      
      this.loansAccountTermsForm
      .get('netinvoiceValue')
      ?.setValue(this.calculatedInvoiceValue);
-     this.loansAccountTermsForm.patchValue({'principalAmount': ni});
+     if (ni === 0) {
+      this.loansAccountTermsForm.patchValue({ 'principalAmount': gi });
+      } else {
+      this.loansAccountTermsForm.patchValue({ 'principalAmount': ni });
+      }
   }
   
 

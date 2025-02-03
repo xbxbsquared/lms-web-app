@@ -2430,7 +2430,7 @@
             "Factoring fees": "Factoring Fees",
             "Net Invoice Value": "Net Invoice Value",
             "Interest Rate": "Interest Rate",
-            "Tenure": "Tenure"
+            "tenure": "tenure"
             
         },
         "links": {

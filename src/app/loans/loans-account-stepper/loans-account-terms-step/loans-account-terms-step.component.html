@@ -39,8 +39,8 @@
       <input type="number" matInput formControlName="interestRate">
     </mat-form-field>
     <mat-form-field fxFlex="23%">
-      <mat-label>{{ "labels.inputs.Tenure" | translate }}</mat-label>
-      <mat-select formControlName="Tenure">
+      <mat-label>{{ "labels.inputs.tenure" | translate }}</mat-label>
+      <mat-select formControlName="tenure">
         <mat-option *ngFor="let option of tenureOptions" [value]="option.value">
           {{ option.display }}
         </mat-option>
