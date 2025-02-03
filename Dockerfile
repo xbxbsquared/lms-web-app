@@ -11,6 +11,9 @@ ARG PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com
 ARG PUPPETEER_CHROMIUM_REVISION_ARG=1011831
 ARG PUPPETEER_SKIP_DOWNLOAD_ARG
 
+# Set the environment variable to skip Chromium download
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+
 # Set the environment variable to increase Node.js memory limit
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
@@ -23,8 +26,6 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # Export Puppeteer env variables for installation with non-default registry.
 ENV PUPPETEER_DOWNLOAD_HOST $PUPPETEER_DOWNLOAD_HOST_ARG
 ENV PUPPETEER_CHROMIUM_REVISION $PUPPETEER_CHROMIUM_REVISION_ARG
-
-ENV PUPPETEER_SKIP_DOWNLOAD $PUPPETEER_SKIP_DOWNLOAD_ARG
 
 COPY ./ /usr/src/app/
 
