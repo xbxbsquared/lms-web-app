@@ -1,52 +1,43 @@
-###############
-### STAGE 1: Build app
-###############
-ARG BUILDER_IMAGE=node:19-alpine
-ARG NGINX_IMAGE=nginx:1.19.3
+FROM node:16
 
-FROM $BUILDER_IMAGE as builder
-ARG NPM_REGISTRY_URL=https://registry.npmjs.org/
-ARG BUILD_ENVIRONMENT_OPTIONS="--configuration production"
-ARG PUPPETEER_DOWNLOAD_HOST_ARG=https://storage.googleapis.com
-ARG PUPPETEER_CHROMIUM_REVISION_ARG=1011831
-ARG PUPPETEER_SKIP_DOWNLOAD_ARG
+# Install Chromium dependencies (for ARM architecture, if needed)
+RUN apt-get update && apt-get install -y \
+    wget \
+    ca-certificates \
+    fonts-liberation \
+    libappindicator3-1 \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libgdk-pixbuf2.0-0 \
+    libnspr4 \
+    libnss3 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    xdg-utils \
+    chromium
 
-# Set the environment variable to increase Node.js memory limit
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+# Set the working directory inside the container
+WORKDIR /app
 
-RUN apk add --no-cache git
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-WORKDIR /usr/src/app
-
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-# Export Puppeteer env variables for installation with non-default registry.
-ENV PUPPETEER_DOWNLOAD_HOST $PUPPETEER_DOWNLOAD_HOST_ARG
-ENV PUPPETEER_CHROMIUM_REVISION $PUPPETEER_CHROMIUM_REVISION_ARG
-
-ENV PUPPETEER_SKIP_DOWNLOAD $PUPPETEER_SKIP_DOWNLOAD_ARG
-
-COPY ./ /usr/src/app/
-
-RUN npm cache clear --force
-
-RUN npm config set fetch-retry-maxtimeout 120000
-RUN npm config set registry $NPM_REGISTRY_URL --location=global
-
-RUN npm install --location=global @angular/cli@14.2.12
-
+# Install dependencies
 RUN npm install
 
-RUN ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS
+# Copy the rest of the application code
+COPY . .
 
-###############
-### STAGE 2: Serve app with nginx ###
-###############
-FROM $NGINX_IMAGE
+# Set Puppeteer environment variables to skip download and use the installed Chromium
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-COPY --from=builder /dist /usr/share/nginx/html
+# Expose the port Angular will run on
+EXPOSE 4200
 
-EXPOSE 80
-
-# When the container starts, replace the env.js with values from environment variables
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+# Start Angular development server
+CMD ["npm", "start"]

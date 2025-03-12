@@ -57,3 +57,5 @@ Thumbs.db
 cypress/
 
 src/assets/env.js
+src\environments\.env.ts
+

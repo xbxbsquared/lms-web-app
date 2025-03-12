@@ -573,6 +573,7 @@
             "% Amount": "% Amount",
             "% Interest": "% Interest",
             "% Loan Amount + Interest": "% Loan Amount + Interest",
+            "% Net Invoice": "% Net Invoice",
             "Disbursement": "Disbursement",
             "Specified due date": "Specified due date",
             "Installment Fee": "Installment Fee",
@@ -1127,7 +1128,8 @@
             "Working Days": "Working Days",
             "You have created": "You have created",
             "You can drag and drop the rows to set a Payment Allocations order": "You can drag and drop the rows to set a Payment Allocations order",
-            "successfully select option": "successfully. Please select from the options below to proceed furthur."
+            "successfully select option": "successfully. Please select from the options below to proceed furthur.",
+            "Loan additional Details":"Loan additional Details"
         },
         "inputs": {
             "accounting": {
@@ -1270,6 +1272,9 @@
             "Business Date": "Business Date",
             "Business Rule": "Business Rule",
             "Bussiness Rule": "Business Rule",
+            "Buyer Name": "Buyer Name",
+            "Buyer Email": "Buyer Email",
+            "Buyer Contact":"Buyer Contact",
             "CAMPAIGN": "CAMPAIGN",
             "CHARGES": "CHARGES",
             "COB Date": "COB Date",
@@ -2414,7 +2419,19 @@
             "valid": "valid",
             "INTEREST REFUND": "INTEREST REFUND",
             "Supported Interest Refund Types": "Supported Interest Refund Types",
-            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types"
+            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types",
+            "Addtional Details": "Addtional Details",
+            "Goods Value": "Goods Value",
+            "Freight Charges": "Freight Charges",
+            "Other Charges": "Other Charges",
+            "Advance": "Advance",
+            "Reduction By Lender": "Reduction By Lender",
+            "Advance Ratio": "Advance Ratio",
+            "Factoring fees": "Factoring Fees",
+            "Net Invoice Value": "Net Invoice Value",
+            "Interest Rate": "Interest Rate",
+            "tenure": "tenure"
+            
         },
         "links": {
             "Community": "Community",

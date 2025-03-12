@@ -146,9 +146,20 @@ export class CreateLoansAccountComponent implements OnInit {
       payload['datatables'] = datatables;
     }
 
-    this.loansService.createLoansAccount(payload).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId, 'general'], { relativeTo: this.route });
-    });
+    this.loansService.createLoansAccount(payload).subscribe(
+      (response: any) => {
+        console.log('Response:', response);
+        if (response && response.resourceId) {
+          this.router.navigate(['../', response.resourceId, 'general'], { relativeTo: this.route });
+        } else {
+          console.error('Unexpected response format:', response);
+        }
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+    
   }
 
 }

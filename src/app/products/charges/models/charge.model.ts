@@ -32,7 +32,7 @@ export enum ChargeAppliesToCode {
     ChargeCalculationTypePercentOfAmount = 'chargeCalculationType.percent.of.amount',
     ChargeCalculationTypePercentOfAmountAndInterest = 'chargeCalculationType.percent.of.amount.and.interest',
     ChargeCalculationTypePercentOfInterest = 'chargeCalculationType.percent.of.interest',
-    ChargeTimeTypeActivation = 'chargeTimeType.activation',
+    ChargeCalculationTypePercentOfNetInvoice = 'chargeCalculationType.percent.of.net.invoice',
     ChargeTimeTypeAnnualFee = 'chargeTimeType.annualFee',
     ChargeTimeTypeDisbursement = 'chargeTimeType.disbursement',
     ChargeTimeTypeInstalmentFee = 'chargeTimeType.instalmentFee',

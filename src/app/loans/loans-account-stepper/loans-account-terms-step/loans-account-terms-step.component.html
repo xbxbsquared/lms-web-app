@@ -2,10 +2,55 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.goodsValue"
+      [inputLabel]="'Goods Value'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.freightCharges"
+      [inputLabel]="'Freight Charges'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.otherCharges"
+      [inputLabel]="'Other Charges'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+    [inputFormControl]="loansAccountTermsForm.controls.advance"
+    [inputLabel]="'Advance'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.reductionByLender"
+      [inputLabel]="'Reduction By Lender'">
+    </mifosx-input-amount>
+    <mat-form-field fxFlex="23%">
+      <mat-label>{{"labels.inputs.Advance Ratio" | translate}} %</mat-label>
+      <input type="number" matInput formControlName="advanceRatio">
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>{{"labels.inputs.Factoring fees" | translate}} %</mat-label>
+      <input type="number" matInput formControlName="factoringFees">
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>{{ "labels.inputs.Net Invoice Value" | translate }}</mat-label>
+      <input matInput [value]="calculatedInvoiceValue" readonly>
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>{{"labels.inputs.Interest Rate" | translate}} %</mat-label>
+      <input type="number" matInput formControlName="interestRate">
+    </mat-form-field>
+    <mat-form-field fxFlex="23%">
+      <mat-label>{{ "labels.inputs.tenure" | translate }}</mat-label>
+      <mat-select formControlName="tenure">
+        <mat-option *ngFor="let option of tenureOptions" [value]="option.value">
+          {{ option.display }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mifosx-input-amount fxFlex="48%"  *ngIf="currency" [currency]="currency" [isRequired]="true"
       [inputFormControl]="loansAccountTermsForm.controls.principalAmount"
       [inputLabel]="'Principal'">
     </mifosx-input-amount>
+    
 
     <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Term Options" | translate}} <i class="fas fa-question" matTooltip="The loan term parameter in loan accounts
       is the default-calculated field based on the number of repayments and repaid every value entered by the user"></i></h4>

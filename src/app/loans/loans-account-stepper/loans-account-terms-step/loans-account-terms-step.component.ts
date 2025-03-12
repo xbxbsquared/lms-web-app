@@ -25,6 +25,9 @@ import { CodeName, OptionData } from 'app/shared/models/option-data.model';
 })
 export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
+  askcharges = false;
+  calculatedInvoiceValue: number = 0;
+
   /** Loans Product Options */
   @Input() loansProductOptions: any;
   /** Loans Account Product Template */
@@ -97,6 +100,14 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * @param formBuilder FormBuilder
    * @param {SettingsService} settingsService SettingsService
    */
+
+
+  tenureOptions = [
+    { value: 30, display: '30 days' },
+    { value: 60, display: '60 days' },
+    { value: 90, display: '90 days' }
+  ];
+  
   constructor(private formBuilder: UntypedFormBuilder,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
@@ -125,6 +136,16 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
       this.loansAccountTermsForm.patchValue({
         'principalAmount': this.loansAccountTermsData.principal,
+        'goodsValue' : this.loansAccountTermsData.goodsValue,
+        'freightCharges' : this.loansAccountTermsData.freightCharges,
+        'otherCharges' : this.loansAccountTermsData.otherCharges,
+        'advance' : this.loansAccountTermsData.advance,
+        'reductionByLender' : this.loansAccountTermsData.reductionByLender,
+        'advanceRatio' : this.loansAccountTermsData.advanceRatio,
+        'factoringFees' : this.loansAccountTermsData.factoringFees,
+        'netinvoiceValue' : this.loansAccountTermsData.netinvoiceValue,
+        'interestRate' : this.loansAccountTermsData.interestRate,
+        'tenure' : this.loansAccountTermsData.tenure,
         'loanTermFrequency': this.loansAccountTermsData.termFrequency,
         'loanTermFrequencyType': this.loansAccountTermsData.termPeriodFrequencyType.id,
         'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
@@ -148,7 +169,11 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan,
         'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id,
         'balloonRepaymentAmount': this.loansAccountTermsData.balloonRepaymentAmount,
-      });
+      },{ emitEvent: true });
+
+      
+
+
 
       this.setAdvancedPaymentStrategyControls();
 
@@ -222,6 +247,16 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       }
       this.loansAccountTermsForm.patchValue({
         'principalAmount': this.loansAccountTermsData.principal,
+        'goodsValue': this.loansAccountTermsData.goodsValue,
+        'freightCharges' : this.loansAccountTermsData.freightCharges,
+        'otherCharges' : this.loansAccountTermsData.otherCharges,
+        'advance' : this.loansAccountTermsData.advance,
+        'reductionByLender' : this.loansAccountTermsData.reductionByLender,
+        'advanceRatio' : this.loansAccountTermsData.advanceRatio,
+        'factoringFees' : this.loansAccountTermsData.factoringFees,
+        'netinvoiceValue' : this.loansAccountTermsData.netinvoiceValue,
+        'interestRate' : this.loansAccountTermsData.interestRate,
+        'tenure' : this.loansAccountTermsData.tenure,
         'loanTermFrequency': this.loansAccountTermsData.termFrequency,
         'loanTermFrequencyType': this.loansAccountTermsData.termPeriodFrequencyType.id,
         'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
@@ -245,7 +280,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan,
         'interestRateFrequencyType': this.loansAccountTermsData.interestRateFrequencyType.id,
         'balloonRepaymentAmount': this.loansAccountTermsData.balloonRepaymentAmount
-      });
+      },{ emitEvent: true });
     }
     this.createloansAccountTermsForm();
     this.setAdvancedPaymentStrategyControls();
@@ -297,6 +332,114 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
           this.loansAccountTermsForm.patchValue({'repaymentFrequencyType': loanTermFrequencyType});
       });
 
+    this.loansAccountTermsForm.get('goodsValue').valueChanges
+      .subscribe(goodsValue => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('freightCharges').valueChanges
+      .subscribe(freightCharges => {
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('otherCharges').valueChanges
+      .subscribe(otherCharges => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('advance').valueChanges
+      .subscribe(advance => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('reductionByLender').valueChanges
+      .subscribe(reductionByLender => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('advanceRatio').valueChanges
+      .subscribe(advanceRatio => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const factoringFees : number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('factoringFees').valueChanges
+      .subscribe(factoringFees => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const tenure : number = this.loansAccountTermsForm.value.tenure;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('tenure').valueChanges
+      .subscribe(tenure => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees: number = this.loansAccountTermsForm.value.factoringFees;
+        const interestRate: number = this.loansAccountTermsForm.value.interestRate;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
+    this.loansAccountTermsForm.get('interestRate').valueChanges
+      .subscribe(interestRate => {
+        const freightCharges: number = this.loansAccountTermsForm.value.freightCharges;
+        const otherCharges: number = this.loansAccountTermsForm.value.otherCharges;
+        const goodsValue: number = this.loansAccountTermsForm.value.goodsValue;
+        const advance: number = this.loansAccountTermsForm.value.advance;
+        const reductionByLender: number = this.loansAccountTermsForm.value.reductionByLender;
+        const advanceRatio: number = this.loansAccountTermsForm.value.advanceRatio;
+        const factoringFees: number = this.loansAccountTermsForm.value.factoringFees;
+        const tenure: number = this.loansAccountTermsForm.value.tenure;
+        this.calculatePrincipal(goodsValue,freightCharges,otherCharges,advance,reductionByLender,advanceRatio,factoringFees, tenure, interestRate);
+    });
     this.loansAccountTermsForm.get('amortizationType').valueChanges
       .subscribe(amortizationType => {
         if (amortizationType === 0) {  // Equal Principal Payments
@@ -336,6 +479,16 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   createloansAccountTermsForm() {
     this.loansAccountTermsForm = this.formBuilder.group({
       'principalAmount': ['', Validators.required],
+      'goodsValue': [0],
+      'freightCharges' : [0],
+      'otherCharges' : [0],
+      'advance' : [''],
+      'reductionByLender' : [''],
+      'advanceRatio' : [''],
+      'factoringFees' : [''],
+      'netinvoiceValue' : [0],
+      'interestRate': [''],
+      'tenure': [30],
       'loanTermFrequency': [{ value: '', disabled: true }, Validators.required],
       'loanTermFrequencyType': ['', Validators.required],
       'numberOfRepayments': ['', Validators.required],
@@ -373,6 +526,39 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     const loanTerm = numberOfRepayments * repaymentEvery;
     this.loansAccountTermsForm.patchValue({'loanTermFrequency': loanTerm});
   }
+
+  calculatePrincipal(goodsV: number, freightC: number,
+    otherC : number, adv: number,
+    reductionBL: number, ar: number, ff: number, tn: number, ir: number): void {
+    
+    var gi: number =0;
+    var aiv: number =0;
+    var ai: number =0;
+    var fi : number = 0;
+    var disbAmt: number =0;
+    var interest: number = 0;
+    var ni: number =0;
+    this.calculatedInvoiceValue = +goodsV + +freightC + +otherC;
+     gi = +goodsV + +freightC + +otherC;
+     gi = gi-reductionBL;
+     gi = gi - adv;
+     disbAmt = (gi*ar)/100;
+     fi = (ff*gi)/100;
+     interest = (ir/100)*(tn/365)*disbAmt;
+     ni = disbAmt-fi-interest;
+     
+     
+     
+     this.loansAccountTermsForm
+     .get('netinvoiceValue')
+     ?.setValue(this.calculatedInvoiceValue);
+     if (ni === 0) {
+      this.loansAccountTermsForm.patchValue({ 'principalAmount': gi });
+      } else {
+      this.loansAccountTermsForm.patchValue({ 'principalAmount': ni });
+      }
+  }
+  
 
   /**
    * Gets the Disbursement Data array.

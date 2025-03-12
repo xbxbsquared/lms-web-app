@@ -13,15 +13,26 @@ import { ReplaySubject, Subject } from 'rxjs';
 /**
  * Loans Account Details Step
  */
+interface Product {
+  id: string; // Adjust this if your ID type is different
+  name: string;
+  // add any other properties your product might have
+}
 @Component({
   selector: 'mifosx-loans-account-details-step',
   templateUrl: './loans-account-details-step.component.html',
   styleUrls: ['./loans-account-details-step.component.scss']
 })
+
 export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
+
+  isFactoringLoan = false;
+
 
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
+
+  
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -68,6 +79,7 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
+
   ngOnInit() {
     this.createLoansAccountDetailsForm();
     this.maxDate = this.settingsService.maxFutureDate;
@@ -82,7 +94,10 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
           'loanPurposeId': this.loansAccountTemplate.loanPurposeId,
           'fundId': this.loansAccountTemplate.fundId,
           'expectedDisbursementDate': this.loansAccountTemplate.timeline.expectedDisbursementDate && new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
-          'externalId': this.loansAccountTemplate.externalId
+          'externalId': this.loansAccountTemplate.externalId,
+          'buyerName': this.loansAccountTemplate.buyerName,
+          'buyerEmail': this.loansAccountTemplate.buyerEmail,
+          'buyerContact': this.loansAccountTemplate.buyerContact
         });
       }
     }
@@ -99,6 +114,7 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
     this._onDestroy.complete();
   }
 
+  
   searchItem(): void {
     if (this.productList) {
       const search: string = this.filterFormCtrl.value.toLowerCase();
@@ -134,22 +150,33 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
    * Fetches loans account product template on productId value changes
    */
   buildDependencies() {
-    const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
-    const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
-    this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
-        this.loansAccountProductTemplate.emit(response);
-        this.loanOfficerOptions = response.loanOfficerOptions;
-        this.loanPurposeOptions = response.loanPurposeOptions;
-        this.fundOptions = response.fundOptions;
-        this.accountLinkingOptions = response.accountLinkingOptions;
-        this.loanProductSelected = true;
-        if (response.createStandingInstructionAtDisbursement) {
-          this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement').patchValue(response.createStandingInstructionAtDisbursement);
-        }
-      });
+  const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
+  const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
+  this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
+      this.loansAccountProductTemplate.emit(response);
+      this.loanOfficerOptions = response.loanOfficerOptions;
+      this.loanPurposeOptions = response.loanPurposeOptions;
+      this.fundOptions = response.fundOptions;
+      this.accountLinkingOptions = response.accountLinkingOptions;
+      this.loanProductSelected = true;
+
+      // Directly compare product name here
+      const selectedProduct = this.productList.find((product: any) => product.id === productId);
+      sessionStorage.setItem('ProductName', selectedProduct.name);
+      if (selectedProduct && selectedProduct.name === 'Factoring Loan') {
+        this.isFactoringLoan = true;
+      } else {
+        this.isFactoringLoan = false;
+      }
+
+      if (response.createStandingInstructionAtDisbursement) {
+        this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement').patchValue(response.createStandingInstructionAtDisbursement);
+      }
     });
-  }
+  });
+}
+
 
   /**
    * Returns loans account details form value.
